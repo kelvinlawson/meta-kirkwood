@@ -1,7 +1,4 @@
-This is a machine layer for Marvell Kirkwood platforms.
-
-Currently supports Angstrom distribution well on top
-of openembedded-core
+This is a Marvell Kirkwood machine layer for openembedded-core.
 
 Provides two machine configurations but should be easy to
 extend to other Kirkwood platforms (these are currently
