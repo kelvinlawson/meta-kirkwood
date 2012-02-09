@@ -1,0 +1,73 @@
+This is a machine layer for Marvell Kirkwood platforms.
+
+Currently supports Angstrom distribution well on top
+of openembedded-core
+
+Provides two machine configurations but should be easy to
+extend to other Kirkwood platforms (these are currently
+identical anyway):
+
+ * Netgear Stora (MS2110): Tested inc SATA, USB, RTC.
+ * Sheevaplug: Not yet tested.
+
+Linux kernel is currently 2.6.35-rc1 pulled from Marvell
+orion git repository. Patches are applied to add support
+for the Netgear MS2110 (NetStora) machine.
+	
+Netgear Stora patches are from Bryan McGuire's repository:
+ http://gitorious.org/openstora/orion-netgear_ms2110.
+
+Currently has only been tested over the network, booting
+the kernel via TFTP and mounting the rootfs via NFS, using
+the standard Netgear-delivered u-boot. Changes may be
+necessary to support programming of the kernel and rootfs
+into flash.
+
+Angstrom instructions:
+
+ * Add this layer to the "sources" folder and add to 
+   bblayers.conf
+ * Optionally add Git repo to sources/layers.txt if
+   you wish to update automatically from Git.
+ * Run "./oebb.sh config <machine>" where machine is
+   "netstora" or "sheevaplug".
+ * Build an image (e.g. "bitbake console-image").
+ * Kernel and rootfs are created in deploy folder.
+
+Boot via TFTP (kernel) and NFS (rootfs):
+
+ * Save u-boot variables:
+   * setenv mainlineLinux yes
+   * setenv arcNumber 2743
+   * saveenv
+ * Set bootargs for NFS mount:
+   * Set up NFS server exporting a folder containing rootfs
+   * Unpack Angstrom-xxx.tar.gz from deploy/images folder
+     into rootfs location (must be done as root).
+   * setenv bootargs console=ttyS0,115200 root=/dev/nfs rw 
+     nfsroot=$(serverip):/nfs/mount/path
+	 ip=$(ipaddr):$(serverip):::DB88FXX81:eth0:none
+ * Boot kernel via TFTP:
+   * Place uImage-<machine>.bin from deploy/images folder
+     (e.g. uImage-netstora.bin) into TFTP root.
+   * tftpboot 0x800000 uImage-netstora.bin
+   * bootm 0x800000
+
+
+This layer depends on:
+
+URI: git://git.openembedded.org/openembedded-core
+branch: master
+revision: HEAD
+
+URI: git://git.angstrom-distribution.org/meta-angstrom
+branch: master
+revision: HEAD
+
+URI: git://git.openembedded.net/meta-openembedded
+branch: master
+revision: HEAD
+
+Send pull requests to kelvinl@users.sf.net
+
+Layer maintainer: Kelvin Lawson <kelvinl@users.sf.net>
