@@ -1,0 +1,34 @@
+From cfe3fdadb16162327773ef01a575a32000b8c7f4 Mon Sep 17 00:00:00 2001
+From: Tilman Sauerbeck <tilman@code-monkey.de>
+Date: Fri, 20 Aug 2010 14:01:47 -0700
+Subject: [PATCH] mtd: nand: Fix probe of Samsung NAND chips
+
+Apparently, the check for a 6-byte ID string introduced by commit
+426c457a3216fac74e3d44dd39729b0689f4c7ab ("mtd: nand: extend NAND flash
+detection to new MLC chips") is NOT sufficient to determine whether or
+not a Samsung chip uses their new MLC detection scheme or the old,
+standard scheme. This adds a condition to check cell type.
+
+Signed-off-by: Tilman Sauerbeck <tilman@code-monkey.de>
+Signed-off-by: Brian Norris <norris@broadcom.com>
+Signed-off-by: David Woodhouse <David.Woodhouse@intel.com>
+Cc: stable@kernel.org
+---
+ drivers/mtd/nand/nand_base.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/mtd/nand/nand_base.c b/drivers/mtd/nand/nand_base.c
+index a22ed7b..d551ddd 100644
+--- a/drivers/mtd/nand/nand_base.c
++++ b/drivers/mtd/nand/nand_base.c
+@@ -2866,6 +2866,7 @@ static struct nand_flash_dev *nand_get_flash_type(struct mtd_info *mtd,
+ 		 */
+ 		if (id_data[0] == id_data[6] && id_data[1] == id_data[7] &&
+ 				id_data[0] == NAND_MFR_SAMSUNG &&
++				(chip->cellinfo & NAND_CI_CELLTYPE_MSK) &&
+ 				id_data[5] != 0x00) {
+ 			/* Calc pagesize */
+ 			mtd->writesize = 2048 << (extid & 0x03);
+-- 
+1.7.6.5
+
