@@ -74,20 +74,6 @@ Boot kernel and rootfs from flash (applies to NetStora):
    * saveenv
    * Reboot and check it runs, or run immediately using 'run bootcmd'.
 
-This layer depends on:
-
-URI: git://git.openembedded.org/openembedded-core
-branch: master
-revision: HEAD
-
-URI: git://git.angstrom-distribution.org/meta-angstrom
-branch: master
-revision: HEAD
-
-URI: git://git.openembedded.net/meta-openembedded
-branch: master
-revision: HEAD
-
-Send pull requests to kelvinl@users.sf.net
+Send pull requests via https://github.com/kelvinlawson/meta-kirkwood
 
 Layer maintainer: Kelvin Lawson <kelvinl@users.sf.net>
