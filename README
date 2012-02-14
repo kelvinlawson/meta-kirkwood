@@ -27,7 +27,7 @@ Angstrom instructions:
 
 Boot via TFTP (kernel) and NFS (rootfs):
 
- * Save u-boot variables:
+ * Save u-boot variables (arcNumber valid for NetStora):
    * setenv mainlineLinux yes
    * setenv arcNumber 2743
    * saveenv
