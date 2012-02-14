@@ -44,6 +44,35 @@ Boot via TFTP (kernel) and NFS (rootfs):
    * tftpboot 0x800000 uImage-netstora.bin
    * bootm 0x800000
 
+Boot kernel and rootfs from flash (applies to NetStora):
+
+ * Save u-boot variables (arcNumber valid for NetStora):
+   * setenv mainlineLinux yes
+   * setenv arcNumber 2743
+   * saveenva
+ * Build an image/rootfs with the mtd-utils package.
+ * Boot the kernel/rootfs via TFTP/NFS as described above.
+ * Copy the kernel and rootfs .ubi image to TFTP server root.
+ * From a serial/SSH terminal:
+   * TFTP the kernel and flash to /dev/mtd1:
+     * cd /tmp
+     * tftp -g -r uImage-netstora.bin 10.4.50.5
+	 * flash_eraseall /dev/mtd1
+	 * nandwrite -p /dev/mtd1 /tmp/uImage-netstora.bin
+   * TFTP the .ubi image and flash to /dev/mtd2:
+     * cd /tmp
+     * tftp -g -r <deploy.rootfs.ubi> /var/lib/tftpboot/rootfs.ubi
+	 * ubiformat /dev/mtd2 -y -f /tmp/rootfs.ubi
+	 * ubiattach /dev/ubi_ctrl -m 2
+	 * mkdir /mnt/ubifs
+	 * mount -t ubifs ubi0 /mnt/ubifs
+	 * Check that the rootfs has mounted successfully in /mnt/ubifs.
+ * Configure uBoot to boot from flash:
+   * setenv bootargs_root ubi.mtd=2,0 root=ubi0 rootfstype=ubifs
+   * setenv bootargs_ip ip=10.4.50.165:10.4.50.4:::DB88FXX81:eth0:none
+   * setenv bootcmd 'nand read.e 0x800000 0x100000 0x300000; setenv bootargs $(console) $(bootargs_root) $(bootargs_ip); bootm 0x800000'
+   * saveenv
+   * Reboot and check it runs, or run immediately using 'run bootcmd'.
 
 This layer depends on:
 
