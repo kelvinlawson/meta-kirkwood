@@ -14,12 +14,6 @@ for the Netgear MS2110 (NetStora) machine.
 Netgear Stora patches are from Bryan McGuire's repository:
  http://gitorious.org/openstora/orion-netgear_ms2110.
 
-Currently has only been tested over the network, booting
-the kernel via TFTP and mounting the rootfs via NFS, using
-the standard Netgear-delivered u-boot. Changes may be
-necessary to support programming of the kernel and rootfs
-into flash.
-
 Angstrom instructions:
 
  * Add this layer to the "sources" folder and add to 
