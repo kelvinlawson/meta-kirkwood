@@ -3,8 +3,6 @@
 
 TARGET_ARCH = "arm"
 
-MACHINE_FEATURES 		= "kernel26 usbhost ext2 vfat mmc"
-
 PREFERRED_PROVIDER_virtual/bootloader = ""
 PREFERRED_PROVIDER_virtual/kernel = "linux-kirkwood"
 

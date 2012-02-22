@@ -8,7 +8,7 @@ SECTION = "kernel"
 LICENSE = "GPLv2"
 
 PV = "2.6.35-rc1"
-PR = "r10"
+PR = "r11"
 
 # Use Marvell Orion kernel 2.6.35-rc1 from git.marvell.com
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
