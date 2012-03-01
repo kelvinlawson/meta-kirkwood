@@ -61,7 +61,7 @@ Boot kernel and rootfs from flash (applies to NetStora):
 	 * nandwrite -p /dev/mtd1 /tmp/uImage-netstora.bin
    * TFTP the .ubi image and flash to /dev/mtd2:
      * cd /tmp
-     * tftp -g -r <deploy.rootfs.ubi> /var/lib/tftpboot/rootfs.ubi
+     * tftp -g -r rootfs.ubi 10.4.50.5
 	 * ubiformat /dev/mtd2 -y -f /tmp/rootfs.ubi
 	 * ubiattach /dev/ubi_ctrl -m 2
 	 * mkdir /mnt/ubifs
