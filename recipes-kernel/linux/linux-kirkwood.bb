@@ -8,7 +8,7 @@ SECTION = "kernel"
 LICENSE = "GPLv2"
 
 PV = "2.6.35-rc1"
-PR = "r11"
+PR = "r14"
 
 # Use Marvell Orion kernel 2.6.35-rc1 from git.marvell.com
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
@@ -20,6 +20,9 @@ SRC_URI += "file://defconfig"
 
 # Add patch for accept4() support on ARM arch (required by systemd)
 SRC_URI += "file://arm-accept4.patch"
+
+# Add patch to create /sys/fs/cgroups entries (required by systemd)
+SRC_URI += "file://0001-cgroupfs-create-sys-fs-cgroup-to-mount-cgroupfs-on.patch"
 
 # Add openstora patch to support Netgear MS2110 (NetStora)
 SRC_URI += "file://openstora.patch"
