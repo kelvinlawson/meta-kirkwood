@@ -31,12 +31,10 @@ SRC_URI += "file://openstora.patch"
 SRC_URI += "file://marvell-orion-2.6.35-rc1-samsung_nand.patch"
 
 KSRC ?= ""
-S = ${@base_conditional("KSRC", "", "${WORKDIR}/git", "${KSRC}", d)}
+S = '${@base_conditional("KSRC", "", "${WORKDIR}/git", "${KSRC}", d)}'
 
 # make everything compatible for the time being
-COMPATIBLE_MACHINE_$MACHINE = $MACHINE
+COMPATIBLE_MACHINE_${MACHINE} = "${MACHINE}"
 
 # only arm is compatible
 COMPATIBLE_HOST = "(arm)"
-
-require recipes-kernel/linux/linux-tools.inc
